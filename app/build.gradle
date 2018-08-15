@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+
+    compileSdkVersion versions.compile_sdk
+
+    defaultConfig {
+        applicationId "app.challange.code.r6h2lle11p"
+        minSdkVersion versions.min_sdk
+        targetSdkVersion versions.target_sdk
+        versionCode versions.app_version
+        versionName versions.app_version_name
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.plugin.kotlin
+    implementation deps.support.appCompat
+    implementation deps.support.design
+    implementation deps.ui.glide
+    implementation deps.arch.lifecycleExtensions
+    implementation deps.network.gson
+    implementation deps.network.giphy
+    implementation deps.rx.rxjava
+    implementation deps.rx.rxandroid
+    implementation deps.di.dagger
+    implementation deps.di.daggerAndroid
+    implementation deps.logging.timber
+    kapt deps.ui.glideCompiler
+    kapt deps.di.daggerCompiler
+    kapt deps.di.daggerAndroidProcessor
+
+    testImplementation deps.test.junit
+    testImplementation deps.test.kotlin
+    testImplementation deps.test.assertj
+    testImplementation deps.test.arch
+    testImplementation(deps.test.mockitoKotlin, {
+        exclude group: excludedDeps.group.jetbrainsKotlin,
+                module: excludedDeps.module.kotlinReflect
+    })
+
+    androidTestImplementation deps.androidTest.espresso
+    androidTestImplementation deps.androidTest.espressoIntents
+
+}
